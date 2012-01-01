@@ -1,0 +1,48 @@
+{*
+ * SampleAdminTool
+ *
+ * @author Ralf Hertsch (ralf.hertsch@phpmanufaktur.de)
+ * @link http://phpmanufaktur.de
+ * @copyright 2011
+ * @license GNU GPL (http://www.gnu.org/licenses/gpl.html)
+ * @version $Id$
+ *
+ * Please consult the Dwoo Documentation & WIKI to get further informations 
+ * and hints for the usage of the Dwoo template engine.
+ *
+ * @link http://wiki.dwoo.org/
+ *
+ * Use {dump()} to get a list of all available variables!
+ *}
+<div class="sample_dialog">
+  <form name="{$form.name}" action="{$form.action}" method="post">
+    <input type="hidden" name="{$action.name}" value="{$action.value}" />
+    <h2>{$form.head}</h2>
+    <div class="{if $form.is_message == 1}message{else}intro{/if}">{$form.intro}</div>
+    <table width="100%">
+      <colgroup>
+        <col width="100" />
+        <col width="*" />
+        <col width="150" />
+      </colgroup>
+      <tr>
+        <td>{$dialog.subject.label}</td>
+        <td><input type="text" name="{$dialog.subject.name}" value="{$dialog.subject.value}" /></td>
+        <td>{$dialog.subject.hint}</td>
+      </tr>
+      <tr>
+        <td>{$dialog.text.label}</td>
+        <td>{$dialog.text.editor}</td>
+        <td>{$dialog.text.hint}</td> 
+      </tr>
+      <tr><td colspan="3">&nbsp;</td></tr>
+      <tr>
+        <td>&nbsp;</td>
+        <td colspan="3">
+          <input type="submit" value="{$form.btn.ok}" />&nbsp;
+          <input type="button" value="{$form.btn.abort}" onclick="javascript: window.location = '{$form.action}'; return false;" />
+        </td>
+      </tr>
+    </table>
+  </form>
+</div>
