@@ -1,7 +1,7 @@
 <?php
 
 /**
- * SampleAdminTool
+ * fbPageTool
  *
  * @author Ralf Hertsch (ralf.hertsch@phpmanufaktur.de)
  * @link http://phpmanufaktur.de
@@ -59,14 +59,7 @@ if (!is_object($parser)) $parser = new Dwoo($compiled_path, $cache_path);
 require_once(WB_PATH.'/modules/'.WYSIWYG_EDITOR.'/include.php');
 
 /**
- * Sample class for an Admin-Tool
- * 
- * This class handles a simple database record with textfield for a subject and
- * a html field for any text and show this fields with additional informations
- * in the backend as admin-tool.
- * 
- * The constructor set default variables and read the record from database, the
- * public function action() handles all requests and return the desired result.
+ * Edit a facebook landing page
  * 
  * @author Ralf Hertsch (ralf.hertsch@phpmanufaktur.de)
  *
