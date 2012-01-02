@@ -71,12 +71,14 @@ require_once(WB_PATH.'/modules/'.WYSIWYG_EDITOR.'/include.php');
  * @author Ralf Hertsch (ralf.hertsch@phpmanufaktur.de)
  *
  */
-class sample_admintool {
+class facebook_page_tool {
     
     // needed REQUESTs for the action handler and for access to the fields 
     const REQUEST_ACTION = 'act';    // action handler
-    const REQUEST_SUBJECT = 'sub';   // subject field 
-    const REQUEST_TEXT = 'txt';      // text field
+    const REQUEST_APP_ID = 'apid';   // field: app id
+    const REQUEST_APP_SECRET = 'sec'; // field: app_secret
+    const REQUEST_PAGE_PATH = 'path'; // field: page path 
+    const REQUEST_PAGE_TEXT = 'txt';      // text field
     
     // needed constants for the different actions
     const ACTION_DEFAULT = 'def';    // action: default
@@ -139,6 +141,10 @@ class sample_admintool {
      * @param string $key
      */
     protected function lang($key) {
+        if (!isset($GLOBALS['LANG'][$key])) {
+            $this->setError("Invalid language index: <b>$key</b>.");
+            return false; 
+        }
         return $GLOBALS['LANG'][$key];
     } // language()
     
@@ -273,9 +279,10 @@ class sample_admintool {
 	protected function getRecord() {
 	    // need handler to the LEPTON database
         global $database;
+        global $admin;
         
         // create Query string
-        $SQL = "SELECT * FROM ".TABLE_PREFIX."mod_sample_admintool WHERE sample_id = '1'";
+        $SQL = "SELECT * FROM ".TABLE_PREFIX."mod_fb_page_tool WHERE fb_pt_id = '1'";
         if (false ===($query = $database->query($SQL))) {
             // on error save the prompt of the database in the error variable
             $this->setError(sprintf('[%s - %s] %s', __METHOD__, __LINE__, $database->get_error()));
@@ -320,27 +327,28 @@ class sample_admintool {
     protected function setRecord($record = array()) {
         // need handler to LEPTON database
         global $database;
+        global $admin;
         
         // set $changes to zero, which means: nothing to do
         $changes = 0;
-        if (isset($record['fb_pt_app_id'])) {
+        if (isset($record['app_id'])) {
             // set the field variable and increase the $changes counter
-            $this->setFieldAppID($record['fb_pt_app_id']);
+            $this->setFieldAppID($record['app_id']);
             $changes++;
         }
-        if (isset($record['fb_pt_app_secret'])) {
+        if (isset($record['app_secret'])) {
             // set the field variable and increase the $changes counter
-            $this->setFieldSecret($record['fb_pt_app_secret']);
+            $this->setFieldSecret($record['app_secret']);
             $changes++;
         }
-        if (isset($record['fb_pt_page_path'])) {
+        if (isset($record['page_path'])) {
             // set the field variable and increase the $changes counter
-            $this->setFieldPath($record['fb_pt_page_path']);
+            $this->setFieldPath($record['page_path']);
             $changes++;
         }        
-        if (isset($record['fb_pt_page_text'])) {
+        if (isset($record['page_text'])) {
             // set the field variable and increase the $changes counter
-            $this->setFieldText($record['fb_pt_page_text']);
+            $this->setFieldText($admin->add_slashes($record['page_text']));
             $changes++;
         }
         
@@ -367,12 +375,12 @@ class sample_admintool {
         }
         else {
             // update the existing record
-            $SQL =  "UPDATE ".TABLE_PREFIX."mod_sample_admintool SET ".
+            $SQL =  "UPDATE ".TABLE_PREFIX."mod_fb_page_tool SET ".
                     "fb_pt_app_id='".$this->getFieldAppID()."', ".
                     "fb_pt_app_secret='".$this->getFieldSecret()."', ".
                     "fb_pt_page_path='".$this->getFieldPath()."', ".
                     "fb_pt_page_text='".$this->getFieldText().
-                    "' WHERE sample_id='1'";
+                    "' WHERE fb_pt_id='1'";
             // exec the SQL statement
             if (!$database->query($SQL)) {
                 // on error save the database prompt and return false
@@ -436,7 +444,7 @@ class sample_admintool {
      */
     public function action() {
         // allow any HTML or strip all requests to simple text?
-        $html_allowed = array(self::REQUEST_TEXT);
+        $html_allowed = array(self::REQUEST_PAGE_TEXT);
         foreach ($_REQUEST as $key => $value) {
             // loop through the requests
             if (!in_array($key, $html_allowed)) {
@@ -475,6 +483,7 @@ class sample_admintool {
      * @return string dialog
      */
     protected function getDialog() {
+        global $admin;
         /**
          * Use the LEPTON default WYSIWYG editor with the settings defined by
          * the WYSIWYG Admin.
@@ -486,7 +495,7 @@ class sample_admintool {
         // starting output buffer
         ob_start();
             // call the WYSIWYG editor, the function will prompt into the output buffer
-            show_wysiwyg_editor(self::REQUEST_TEXT, self::REQUEST_TEXT, $this->getFieldText(), '100%', '300px');
+            show_wysiwyg_editor(self::REQUEST_PAGE_TEXT, self::REQUEST_PAGE_TEXT, $admin->strip_slashes($this->getFieldText()), '100%', '300px');
             // using ob_get_contents() we get the prompt into the variable $editor
             $editor = ob_get_contents();
         // close output buffer and clean up    
@@ -526,24 +535,44 @@ class sample_admintool {
                 // variables of the "dialog" - at least the database fields        
                 'dialog' => array(
                         // the subject field
-                        'subject' => array(
+                        'app_id' => array(
                                 // the label of the field
-                                'label' => $this->lang('dialog_subject_label'),
+                                'label' => $this->lang('dialog_label_app_id'),
                                 // the name of the field
-                                'name' => self::REQUEST_SUBJECT,
+                                'name' => self::REQUEST_APP_ID,
                                 // the value of the field
-                                'value' => $this->getFieldSubject(),
+                                'value' => $this->getFieldAppID(),
                                 // a additional hint for the user
-                                'hint' => $this->lang('dialog_subject_hint')
+                                'hint' => $this->lang('dialog_hint_app_id')
                                 ),
-                        'text' => array(
+                        'app_secret' => array(
                                 // the label of the field
-                                'label' => $this->lang('dialog_text_label'),
-                                // the $editor variable contains the complete WYSIWYG editor
+                                'label' => $this->lang('dialog_label_app_secret'),
+                                // the name of the field
+                                'name' => self::REQUEST_APP_SECRET,
+                                // the value of the field
+                                'value' => $this->getFieldSecret(),
+                                // a additional hint for the user
+                                'hint' => $this->lang('dialog_hint_app_secret')
+                                ),
+                        'page_path' => array(
+                                // the label of the field
+                                'label' => $this->lang('dialog_label_page_path'),
+                                // the name of the field
+                                'name' => self::REQUEST_PAGE_PATH,
+                                // the value of the field
+                                'value' => $this->getFieldPath(),
+                                // a additional hint for the user
+                                'hint' => $this->lang('dialog_hint_page_path')
+                                ),
+                        'page_text' => array(
+                                // the label of the field
+                                'label' => $this->lang('dialog_label_page_text'),
+                                // get the complete editor
                                 'editor' => $editor,
                                 // a additional hint for the user
-                                'hint' => $this->lang('dialog_text_hint')
-                                )
+                                'hint' => $this->lang('dialog_hint_page_text')
+                                ),
                         )
                 );
         // get the template for the dialog and return the result
@@ -558,10 +587,14 @@ class sample_admintool {
      */
     protected function checkDialog() {
         $record = array();
-        // add $record['subject'] if field is set and changed
-        if (isset($_REQUEST[self::REQUEST_SUBJECT]) && ($_REQUEST[self::REQUEST_SUBJECT] != $this->fieldSubject)) $record['subject'] = $_REQUEST[self::REQUEST_SUBJECT];
-        // add $record['text'] if field is set and changed
-        if (isset($_REQUEST[self::REQUEST_TEXT]) && ($_REQUEST[self::REQUEST_TEXT] != $this->fieldText)) $record['text'] = $_REQUEST[self::REQUEST_TEXT];
+        // add $record['app_id'] if field is set and changed
+        if (isset($_REQUEST[self::REQUEST_APP_ID]) && ($_REQUEST[self::REQUEST_APP_ID] != $this->fieldAppID)) $record['app_id'] = $_REQUEST[self::REQUEST_APP_ID];
+        // add $record['app_secret'] if field is set and changed
+        if (isset($_REQUEST[self::REQUEST_APP_SECRET]) && ($_REQUEST[self::REQUEST_APP_SECRET] != $this->fieldSecret)) $record['app_secret'] = $_REQUEST[self::REQUEST_APP_SECRET];
+        // add $record['page_text'] if field is set and changed
+        if (isset($_REQUEST[self::REQUEST_PAGE_PATH]) && ($_REQUEST[self::REQUEST_PAGE_PATH] != $this->fieldPath)) $record['page_path'] = $_REQUEST[self::REQUEST_PAGE_PATH];
+        // add $record['page_text'] if field is set and changed
+        if (isset($_REQUEST[self::REQUEST_PAGE_TEXT]) && ($_REQUEST[self::REQUEST_PAGE_TEXT] != $this->fieldText)) $record['page_text'] = $_REQUEST[self::REQUEST_PAGE_TEXT];
         
         if (count($record) > 0) {
             // change the database record
@@ -578,7 +611,7 @@ class sample_admintool {
 
 
 /**
- * Init the sample_admintool class and execute the action handler
+ * Init the facebook page tool class and execute the action handler
  */
-$tool = new sample_admintool();
+$tool = new facebook_page_tool();
 $tool->action();

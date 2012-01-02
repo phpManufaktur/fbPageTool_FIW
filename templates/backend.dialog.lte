@@ -14,26 +14,31 @@
  *
  * Use {dump()} to get a list of all available variables!
  *}
-<div class="sample_dialog">
+<div class="fb_dialog">
   <form name="{$form.name}" action="{$form.action}" method="post">
     <input type="hidden" name="{$action.name}" value="{$action.value}" />
     <h2>{$form.head}</h2>
     <div class="{if $form.is_message == 1}message{else}intro{/if}">{$form.intro}</div>
     <table width="100%">
       <colgroup>
-        <col width="100" />
+        <col width="150" />
         <col width="*" />
         <col width="150" />
       </colgroup>
       <tr>
-        <td>{$dialog.subject.label}</td>
-        <td><input type="text" name="{$dialog.subject.name}" value="{$dialog.subject.value}" /></td>
-        <td>{$dialog.subject.hint}</td>
+        <td>{$dialog.app_id.label}</td>
+        <td><input type="text" name="{$dialog.app_id.name}" value="{$dialog.app_id.value}" /></td>
+        <td>{$dialog.app_id.hint}</td>
       </tr>
       <tr>
-        <td>{$dialog.text.label}</td>
-        <td>{$dialog.text.editor}</td>
-        <td>{$dialog.text.hint}</td> 
+        <td>{$dialog.app_secret.label}</td>
+        <td><input type="text" name="{$dialog.app_secret.name}" value="{$dialog.app_secret.value}" /></td>
+        <td>{$dialog.app_secret.hint}</td>
+      </tr>
+      <tr>
+        <td>{$dialog.page_text.label}</td>
+        <td>{$dialog.page_text.editor}</td>
+        <td>{$dialog.page_text.hint}</td> 
       </tr>
       <tr><td colspan="3">&nbsp;</td></tr>
       <tr>

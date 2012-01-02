@@ -31,7 +31,7 @@ if (defined('WB_PATH')) {
 }
 // end include class.secure.php
 
-$module_description   = 'Sample of a Admin-Tool for LEPTON CMS';
+$module_description   = 'Change the content of a Facebook landing page';
 
 global $LANG;
 
@@ -40,14 +40,22 @@ $LANG = array(
             => 'Cancel',
         'btn_ok' 
             => 'OK',
-        'dialog_subject_hint'
-            => 'Hint for the dialog subject',
-        'dialog_subject_label'
-            => 'Subject',
-        'dialog_text_hint'
-            => 'Hint for the dialog text',
-        'dialog_text_label'
-            => 'Text',
+        'dialog_hint_app_id'
+            => '',
+        'dialog_label_app_id'
+            => 'Facebook App ID',
+        'dialog_hint_app_secret'
+            => 'Tragen Sie hier das Facebook App Secret ein',
+        'dialog_label_app_secret'
+            => 'Facebook App Secret',
+        'dialog_hint_page_path'
+            => 'Tragen Sie hier den LEPTON Pfad auf die Facebook index.php ein',
+        'dialog_label_page_path'
+            => 'Pfad auf FB index.php',
+        'dialog_hint_page_text'
+            => '',
+        'dialog_label_page_text'
+            => 'Text für die FB Seite',
         'error_executing_template'
             => 'Error executing the template <b>%s</b>: %s',
         'form_header'

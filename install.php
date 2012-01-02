@@ -35,12 +35,12 @@ global $database;
 global $admin;
 
 $SQL =  "CREATE TABLE IF NOT EXISTS ".TABLE_PREFIX."mod_fb_page_tool (".
-        "fb_pt_id INT(11) NOT NULL DEFAULT '1',".
-        "fb_pt_app_id VARCHAR(255) NOT NULL DEFAULT '',".
-        "fb_pt_app_secret VARCHAR(255) NOT NULL DEFAULT '',".
-        "fb_pt_page_path TEXT NOT NULL DEFAULT ''".
-        "fb_pt_page_text TEXT NOT NULL DEFAULT ''".
-        "PRIMARY KEY (sample_id))";
+        "fb_pt_id INT(11) NOT NULL DEFAULT '1', ".
+        "fb_pt_app_id VARCHAR(255) NOT NULL DEFAULT '', ".
+        "fb_pt_app_secret VARCHAR(255) NOT NULL DEFAULT '', ".
+        "fb_pt_page_path TEXT NOT NULL DEFAULT '', ".
+        "fb_pt_page_text TEXT NOT NULL DEFAULT '', ". 
+        "PRIMARY KEY (fb_pt_id))";
 
 $database->query($SQL);
 

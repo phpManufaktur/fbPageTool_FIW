@@ -7,7 +7,7 @@
  * @link http://phpmanufaktur.de
  * @copyright 2011
  * @license GNU GPL (http://www.gnu.org/licenses/gpl.html)
- * @version $Id$
+ * @version $Id: index.php 2 2012-01-01 08:00:38Z phpmanufaktur $
  *
  * FOR VERSION- AND RELEASE NOTES PLEASE LOOK AT INFO.TXT!
  */
