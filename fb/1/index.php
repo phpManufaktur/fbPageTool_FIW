@@ -1,15 +1,13 @@
 <?php
 
 /**
- * fbPageTool
+ * fbPageTool_FIW
  *
- * @author Ralf Hertsch (ralf.hertsch@phpmanufaktur.de)
+ * @author Ralf Hertsch <ralf.hertsch@phpmanufaktur.de>
+ * @author FIW 2011/2012 - HTW Berlin
  * @link http://phpmanufaktur.de
- * @copyright 2011
- * @license GNU GPL (http://www.gnu.org/licenses/gpl.html)
- * @version $Id: index.php 2 2012-01-01 08:00:38Z phpmanufaktur $
- *
- * FOR VERSION- AND RELEASE NOTES PLEASE LOOK AT INFO.TXT!
+ * @copyright 2011 - 2012
+ * @license MIT License (MIT) http://www.opensource.org/licenses/MIT
  */
 
 // LEPTON CMS config.php needed - this file is called external!

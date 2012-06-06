@@ -1,0 +1,21 @@
+### fbPageTool_FIW
+
+Ralf Hertsch <ralf.hertsch@phpmanufaktur.de>
+FIW 2011/2012 - HTW Berlin
+http://phpmanufaktur.de
+(c) 2011 MIT License (MIT) http://www.opensource.org/licenses/MIT
+
+
+0.11 - 2012-06-06
+
+* moved repository from SVN to GitHub
+* added CHANGELOG
+* added LICENSE
+* added README.md
+* removed info.txt
+* updated all header and archive informations
+* fixed some small typos
+
+0.10 - 2011-12-20
+
+* initial release
